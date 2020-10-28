@@ -80,8 +80,8 @@ def visualize_distributions(y_true, y_pred, ax: Union[None, plt.Axes] = None):
         fig, axes = None, [ax]  # type: (None, List[plt.Axes])
 
     for y, pred, ax, class_name in zip(y_true.T, y_pred.T, axes, classes):
-        sns.distplot(pred[y == 1], ax=ax, label='Pos')
-        sns.distplot(pred[y == 0], ax=ax, label='Neg')
+        sns.displot(pred[y == 1], ax=ax, label='Pos')
+        sns.displot(pred[y == 0], ax=ax, label='Neg')
         ax.set_xlabel(f'class = {classes}')
 
     return fig, ax
@@ -96,8 +96,8 @@ def visualize_continuous_distributions(y_true,
     else:
         fig, ax = None, ax
 
-    sns.distplot(y_true, ax=ax, label='Target')
-    sns.distplot(y_pred, ax=ax, label='Predict')
+    sns.displot(y_true, ax=ax, label='Target')
+    sns.displot(y_pred, ax=ax, label='Predict')
     ax.legend()
     return fig, ax
 
