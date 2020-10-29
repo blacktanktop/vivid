@@ -68,7 +68,6 @@ def visualize_distributions(y_true, y_pred, ax: Union[None, plt.Axes] = None):
         check_classification_targets(y_true)
     except ValueError:
         return visualize_continuous_distributions(y_true, y_pred, ax=ax)
-
     y_true, y_pred, classes = check_y_and_pred(y_true, y_pred)
     n_classes = len(classes)
 
@@ -79,9 +78,10 @@ def visualize_distributions(y_true, y_pred, ax: Union[None, plt.Axes] = None):
     else:
         fig, axes = None, [ax]  # type: (None, List[plt.Axes])
 
+    c = sns.color_palette("pastel")
     for y, pred, ax, class_name in zip(y_true.T, y_pred.T, axes, classes):
-        sns.displot(pred[y == 1], ax=ax, label='Pos')
-        sns.displot(pred[y == 0], ax=ax, label='Neg')
+        sns.histplot(pred[y == 1], ax=ax, label='Pos', element="step", kde=True, alpha=0.5, color = c[0])
+        sns.histplot(pred[y == 0], ax=ax, label='Neg', element="step", kde=True, alpha=0.5, color = c[1])
         ax.set_xlabel(f'class = {classes}')
 
     return fig, ax
@@ -95,9 +95,10 @@ def visualize_continuous_distributions(y_true,
         fig, ax = plt.subplots(figsize=(6, 6))
     else:
         fig, ax = None, ax
-
-    sns.displot(y_true, ax=ax, label='Target')
-    sns.displot(y_pred, ax=ax, label='Predict')
+    
+    c = sns.color_palette("pastel")
+    sns.histplot(y_true, ax=ax, label='Target', element="step", kde=True, alpha=0.5, color = c[0])
+    sns.histplot(y_pred, ax=ax, label='Predict', element="step", kde=True, alpha=0.5, color = c[1])
     ax.legend()
     return fig, ax
 
